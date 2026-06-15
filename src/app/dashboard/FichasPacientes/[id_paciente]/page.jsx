@@ -17,6 +17,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import {InfoButton} from "@/Componentes/InfoButton";
 import { formatRut } from "@/lib/designTokens";
 import {
+    canAccessDashboardPath,
     canAccessOdontograma,
     canAccessRecetasEnFicha,
     getDashboardRoleFromUser,
@@ -151,6 +152,10 @@ export default function Paciente() {
 
     function verOdontogramas() {
         router.push(`/dashboard/odontogramasPaciente/${id_paciente}`);
+    }
+
+    function verArchivosPaciente() {
+        router.push(`/dashboard/archivosPacientes/${id_paciente}`);
     }
 
     function editarFichaClinica(id_ficha) {
@@ -485,6 +490,7 @@ export default function Paciente() {
     const dashboardRole = getDashboardRoleFromUser(user);
     const canSeeOdontograma = canAccessOdontograma(dashboardRole);
     const canSeeRecetaMedica = canAccessRecetasEnFicha(dashboardRole);
+    const canSeeArchivosPaciente = canAccessDashboardPath(dashboardRole, `/dashboard/archivosPacientes/${id_paciente}`);
 
 
 
@@ -605,7 +611,7 @@ export default function Paciente() {
                     <div className="xl:col-span-8 space-y-8">
                         
                         {/* Acciones Rápidas */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                             <button onClick={() => nuevaFichaClinica(id_paciente)} className="h-28 bg-white border border-slate-200 rounded-[28px] p-6 flex flex-col justify-between hover:border-[#6E56CF] hover:shadow-lg hover:shadow-indigo-50/50 transition-all group text-left">
                                 <div className="h-10 w-10 rounded-xl bg-violet-50 text-[#6E56CF] flex items-center justify-center group-hover:bg-[#6E56CF] group-hover:text-white transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
@@ -624,6 +630,17 @@ export default function Paciente() {
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 9.75h4.5m-4.5 4.5h4.5M7.5 3.75h9A2.25 2.25 0 0118.75 6v12A2.25 2.25 0 0116.5 20.25h-9A2.25 2.25 0 015.25 18V6A2.25 2.25 0 017.5 3.75z" /></svg>
                                     </div>
                                     <span className="text-[13px] font-bold text-slate-700">Odontograma</span>
+                                </button>
+                            )}
+                            {canSeeArchivosPaciente && (
+                                <button onClick={verArchivosPaciente} className="h-28 bg-white border border-slate-200 rounded-[28px] p-6 flex flex-col justify-between hover:border-[#6E56CF] hover:shadow-lg hover:shadow-indigo-50/50 transition-all group text-left">
+                                    <div className="h-10 w-10 rounded-xl bg-violet-50 text-[#6E56CF] flex items-center justify-center group-hover:bg-[#6E56CF] group-hover:text-white transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 13h8m-8 3h5" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-[13px] font-bold text-slate-700">Archivos</span>
                                 </button>
                             )}
                             {canSeeRecetaMedica && (
