@@ -439,17 +439,26 @@ const DASHBOARD_ROLE_DETAILS = {
 };
 
 function normalizeDashboardRole(input) {
-  const raw = String(input || "").trim().toLowerCase();
+  const raw = String(input || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 
   if (!raw) {
     return "default";
   }
 
-  if (raw === "default" || raw === "admin") {
+  const normalized = raw
+    .replace(/^perfil\s+/, "")
+    .replace(/[_\s]+/g, "-")
+    .replace(/-+/g, "-");
+
+  if (normalized === "default" || normalized === "admin") {
     return "admin";
   }
 
-  return DASHBOARD_ROLE_SET.has(raw) ? raw : "unknown";
+  return DASHBOARD_ROLE_SET.has(normalized) ? normalized : "unknown";
 }
 
 function hasFullDashboardAccess(role) {

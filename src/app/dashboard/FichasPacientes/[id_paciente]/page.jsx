@@ -640,7 +640,7 @@ export default function Paciente() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 13h8m-8 3h5" />
                                         </svg>
                                     </div>
-                                    <span className="text-[13px] font-bold text-slate-700">Archivos</span>
+                                    <span className="text-[13px] font-bold text-slate-700">Subir Archivos</span>
                                 </button>
                             )}
                             {canSeeRecetaMedica && (
